@@ -1,0 +1,23 @@
+# Django & REST Framework
+django
+djangorestframework
+drf-spectacular # Para Swagger/OpenAPI
+
+# Banco de dados e Cache
+psycopg2-binary # Driver do PostgreSQL
+redis
+
+# Tarefas Assíncronas
+celery
+
+# HTTP Requests
+requests
+
+# Logging
+structlog
+
+# Servidor de Produção
+gunicorn
+
+# Variáveis de ambiente
+python-decouple
