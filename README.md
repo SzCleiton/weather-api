@@ -26,7 +26,7 @@ Pré-requisitos: Docker e Docker Compose instalados.
 1. Clone o repositório:
 ```
 git clone https://github.com/SzCleiton/weather-api.git
-cd seu-repositorio
+cd weather-api
 ```
 
 2. Configure as variáveis de ambiente:

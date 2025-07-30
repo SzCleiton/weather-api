@@ -1,11 +1,12 @@
 django
 djangorestframework
-drf-spectacular # Para Swagger/OpenAPI
+drf-spectacular
 
 djangorestframework-simplejwt
 django-health-check
 
-psycopg2-binary # Driver do PostgreSQL
+psycopg2-binary
+dj-database-url
 redis
 django-redis
 

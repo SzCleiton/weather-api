@@ -19,7 +19,7 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn weather_project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
@@ -29,7 +29,7 @@ services:
       - cache
     env_file:
       - .env
-
+    
   worker:
     build: .
     command: celery -A weather_project worker -l info

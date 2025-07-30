@@ -1,0 +1,21 @@
+# Ignorar o Git
+.git
+.gitignore
+
+# Ignorar o ambiente virtual (se existir localmente)
+venv
+.venv
+
+# Ignorar arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar arquivos de configuração local e de IDE
+.env
+.vscode/
+.idea/
+
+# Ignorar arquivos de teste de diagnóstico
+Dockerfile.debug
+docker-compose.debug.yml

@@ -1,0 +1,7 @@
+FROM python:3.9-slim
+
+WORKDIR /code
+
+# Apenas copia os arquivos e depois lista o que foi copiado.
+COPY . .
+CMD ["ls", "-la", "/code"]
