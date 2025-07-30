@@ -41,5 +41,13 @@ services:
     env_file:
       - .env
 
+  beat:
+    build: .
+    command: celery -A weather_project beat -l info
+    depends_on:
+      - cache
+    env_file:
+      - .env
+
 volumes:
   postgres_data:

@@ -1,14 +1,13 @@
 import sys
 import structlog
 from structlog.contextvars import merge_contextvars
-from decouple import config, Csv
+from datetime import timedelta
 
 # ... (SECRET_KEY, DEBUG, etc. podem ser lidos com a lib decouple)
 # SECRET_KEY = config('SECRET_KEY')
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
 INSTALLED_APPS = [
-    # ...
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -16,10 +15,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Libs
     'rest_framework',
-    'rest_framework.authtoken',
     'drf_spectacular',
     # Apps
     'apps.weather',
+    'health_check',
+    'health_check.db',
+    'health_check.cache',
+    'health_check.contrib.redis',
 ]
 
 # ...
@@ -27,7 +29,7 @@ INSTALLED_APPS = [
 # Configurações do DRF (Rate Limit, Auth, Docs)
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -39,6 +41,11 @@ REST_FRAMEWORK = {
         'user': '20/min',
     },
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
 # Configuração de Cache com Redis
@@ -85,6 +92,13 @@ structlog.configure(
     wrapper_class=structlog.stdlib.BoundLogger,
     cache_logger_on_first_use=True,
 )
+
+CELERY_BEAT_SCHEDULE = {
+    'cleanup-old-search-history': {
+        'task': 'apps.weather.tasks.cleanup_old_search_history',
+        'schedule': 3600.0,
+    },
+}
 
 # Configuração do Celery
 CELERY_BROKER_URL = config('CELERY_BROKER_URL', default='redis://localhost:6379/0')
